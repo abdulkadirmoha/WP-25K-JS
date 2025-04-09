@@ -5,3 +5,8 @@
 4. Käytä Math.ceil() metodia sen pyöristämiseen ylöspäin seuraavaan lähimpään kokonaislukuun.
 5. Tulosta kaikki saamasi tulokset console.log() avulla ja lisää jokaiselle selittävät teksti.
 */
+
+let num = 5.67;
+console.log(Math.round(num));
+console.log(Math.floor(num));
+console.log(Math.ceil(num));

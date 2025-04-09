@@ -4,3 +4,7 @@
  * - Laske näiden kahden numeron jakolaskun tulos ja tallenna se uuteen muuttujaan
  * - Tulosta vastaus konsoliin.
  */
+let num1 = 54;
+let num2 = 8;
+let vastaus = num1 / num2;
+console.log(vastaus);

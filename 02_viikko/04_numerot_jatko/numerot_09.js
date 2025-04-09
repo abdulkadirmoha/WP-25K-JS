@@ -11,3 +11,5 @@ Esimerkkivastaukset:
 "NaN" (kun syöte ei kelpaa).
 
  */
+let userInput = "25.85";
+console.log(parseFloat(userInput).toFixed(1), "Omena");

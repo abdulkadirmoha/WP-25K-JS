@@ -6,3 +6,11 @@
 "The largest number is 20."
 "The smallest number is 7."
 */
+let a = 12;
+let b = 7;
+let c = 20;
+
+console.log(`The Largest number is : ${Math.max(a,b,c)}
+The smallest number is : ${Math.min(a,b,c)}
+`);
+ 

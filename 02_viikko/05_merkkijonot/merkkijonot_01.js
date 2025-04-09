@@ -4,3 +4,13 @@
 `Mallimerkkijono`
 Tulosta kaikki kolme merkkijonoa käyttäen console.log().
 */
+
+const a = 'Yksinkertaisilla lainausmerkeillä merkitty merkkijono';
+const b = "Kaksoislainausmerkeillä merkitty merkkijono";
+const c = `Mallimerkkijono`;
+
+console.log(`
+    '${a}'
+    "${b}"
+    \`${c}\`
+    `);

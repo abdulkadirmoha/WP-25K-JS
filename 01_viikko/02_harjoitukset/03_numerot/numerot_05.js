@@ -4,3 +4,10 @@
  * - Laske tuotteiden yhteishinta ja tallenna se muuttujaan, esimerkiksi yhteishinta.
  * - Tulosta yhteishinta konsoliin.
  */
+let ostokori = [
+  { tuote: "Televisio", hinta: 493 },
+  { tuote: "Tietokone", hinta: 395 },
+];
+
+let yhteishinta = ostokori.reduce((sum,item) => sum + item.hinta,0);
+console.log(`Òstoskorin yhteishinta: ${yhteishinta} €`);

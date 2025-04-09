@@ -9,3 +9,23 @@
 
 - Käytä typeof-operatoria tarkistaaksesi jokaisen muuttujan tietotyypin ja tulosta tulos console.log()-metodilla.
 */
+
+let age = 39;
+let name = "Abdi";
+let isStudent = true;
+let hobbies = ["Traveling", "Sports", "Reading"];
+
+const info = {
+  schoolName: "Merkkijono",
+  grade: 10,
+};
+
+console.log(`
+Student Name       : ${name}
+Age               : ${age}
+School Name       : ${info.schoolName}
+Grade             : ${info.grade}
+Is Enrolled       : ${isStudent ? "Yes" : "No"}
+Student Hobbies   : ${hobbies.join(", ")}
+`);
+
