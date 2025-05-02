@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pancake Order</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://use.typekit.net/tpi7rpa.css" />
+</head>
+<body>
+  <main>
+    <!-- Header Section -->
+    <div class="main-container">
+      <header class="header">
+        <div class="header__container">
+          <div class="header__logo">
+            <img src="image/pancake_logo.png" alt="Pancake Logo" class="header__logo-img" />
+          </div>
+          <nav class="header__nav">
+            <img src="image/ph-home.svg" alt="Home" class="header__icon" />
+            <div class="cart-icon">
+                <img src="image/ph-cart.svg" alt="Cart" class="header__icon" />
+                <span class="cart-count">0</span>
+            </div>
+            <img src="image/ph-menu.svg" alt="Menu" class="header__icon" />
+          </nav>
+        </div>
+      </header>
+
+      <!-- Hero Section -->
+      <section class="hero">
+        <div class="hero__content">
+          <div class="hero__text">
+            <p class="hero__headline">Home of the Classic Pancakes</p>
+            <p class="hero__subtext">
+              <span>The homey goodness of plain golden pancakes served with whipped butter.</span>
+            </p>
+          </div>
+          <div class="hero__image">
+            <img src="image/ph-hero.png" alt="Pancake Hero Image" class="hero__image-desktop" />
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Pancake Grid Section -->
+    <section class="pancake-section">
+      <div class="pancake-grid-title">
+        <p>Main Course</p>
+      </div>
+
+      <div class="pancake-grid">
+        <div class="pancake-card">
+          <img  src="image/pancake.jpeg" alt="Classic Pancakes" class="pancake-image data-image" />
+          <div class="pancake-info">
+            <h3 class="pancake-name">Classic Pancakes</h3>
+            <p class="pancake-description">Golden fluffy pancakes with butter & syrup.</p>
+            
+            <p class="data-price">Yhteensä: <span class="data-price">0.00€</span></p>
+          </div>
+                
+        </div>
+        
+        <div class="pancake-type">
+        <form id="pancakeForm">
+          <div class="two-column">
+            <div class="column">
+            <label for="type"><h3>Valitse pannukakun tyyppi:</h3></label>
+            <select id="type">
+                <option data-price="5">Klassinen 5€</option>
+                <option data-price="6">Suklaa 6€</option>
+                <option data-price="7">Mustikka 7€</option>
+            </select>
+              
+              <h3>Valitse täytteet (1€ / kpl):</h3>
+                <label><input type="checkbox" class="topping" data-price="1" /> Pähkinät</label>
+                <label><input type="checkbox" class="topping" data-price="1" /> Banaani</label>
+                <label><input type="checkbox" class="topping" data-price="1" /> Siirappi</label>
+                <!-- Lisukkeet -->
+                <h3>Valitse lisukkeet:</h3>
+                <label><input type="checkbox" class="extra" data-price="2"/> Kermavaahto +2€</label>
+                <label><input type="checkbox" class="extra" data-price="3" /> Jäätelö +3€</label>
+            </div>
+          <div class="column">
+          <div class="form-column">
+            <h3>Valitse toimitustapa:</h3>
+            <div class="delivery-options">
+              <label><input type="radio" name="delivery" class="delivery" data-price="0" checked /> Syö täällä</label>
+              <label><input type="radio" name="delivery" class="delivery" data-price="0" /> Ota mukaan</label>
+              <label><input type="radio" name="delivery" class="delivery" data-price="5" /> Toimitus (+ 5€)</label>
+            </div>
+            <label for="customerName">Sinun nimesi:</label>
+            <input type="text" id="customerName" placeholder="Syötä sinun nimi" />
+            <label for="customerAddress">Osoitteesi:</label>
+            <input type="text" id="customerAddress" placeholder="Syötä osoitteesi" />
+          </div>
+          </div>
+          <button type="submit">Lähetä</button>
+          </form>
+
+        </div>      
+      </div>
+    </section>
+   
+    </div>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
