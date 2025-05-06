@@ -1,61 +1,116 @@
 document.addEventListener("DOMContentLoaded", (event) => {
-    const form = document.getElementById("pancakeForm");
-    let totalPrice = document.querySelector('.data-price');
+  const form = document.getElementById("pancakeForm");
+  let totalPriceElement = document.querySelector(".data-price");
+  const showOrderButton = document.querySelector(".showOrderButton");
+  const orderSummaryDiv = document.querySelector(".orderSummary");
+  const customerNameInput = document.getElementById("customerName");
 
-    let toppings = [];
-    let extra = [];
+  let toppings = [];
+  let extra = [];
 
-    form.addEventListener("change", (event) => {
-        const target = event.target;
-        if(target.id === "type") {
-            updatePrice()
-        } else if(target.classList.contains("topping" ) ){
-            handleToppings(target);
-            
-        } else if (target.classList.contains("extra")){
-          handleExtra(target);
-        }  
-        
+  const updatePrice = () => {
+    const pancakeTypeSelect = document.getElementById("type");
+    const selectedType =
+      pancakeTypeSelect.options[pancakeTypeSelect.selectedIndex];
+    let total = parseFloat(selectedType.getAttribute("data-price"));
+
+    total = total + toppings.length * 1;
+
+    let extraCheckboxes = document.querySelectorAll(".extra");
+    extraCheckboxes.forEach((checkbox) => {
+      if (checkbox.checked) {
+        total = total + parseFloat(checkbox.getAttribute("data-price"));
+      }
     });
-    const updatePrice =() => {
-        const pancakeType = document.getElementById("type");
-        const selectedType = pancakeType.options[pancakeType.selectedIndex];
-        let total = parseFloat(selectedType.getAttribute("data-price"));
 
-        total = total +toppings.length * 1;
-
-        let extraChoices = document.querySelectorAll(".extra");
-        extraChoices.forEach((checkbox) => {
-            if(checkbox.checked){
-                total = total + parseFloat(checkbox.getAttribute("data-price"))
-            }
-        });
-
-
-        let formattedTotal = "Yhteensä: " + total.toFixed(2)  + "€";
-        totalPrice.textContent = formattedTotal
+    const selectedDelivery = document.querySelector(
+      'input[name="delivery"]:checked'
+    );
+    if (selectedDelivery) {
+      const deliveryFee =
+        parseFloat(selectedDelivery.getAttribute("data-price")) || 0;
+      total += deliveryFee;
     }
-    const handleToppings =(checkbox) => {
-    const checkboxes = document.querySelectorAll('input[name="topping"]');
+
+    let formattedTotal = "Yhteensä: " + total.toFixed(2) + "€";
+    totalPriceElement.textContent = formattedTotal;
+  };
+
+  const handleToppings = (checkbox) => {
     const toppingName = checkbox.parentElement.textContent.trim();
-        if(checkbox.checked){
-            toppings.push(toppingName)
+    if (checkbox.checked) {
+      toppings.push(toppingName);
+    } else {
+      toppings = toppings.filter((t) => t !== toppingName);
+    }
+    console.log("täytteet: ", toppings);
+    updatePrice();
+  };
 
-        } else {
-            toppings = toppings.filter((t) =>  t !== toppingName)
-        } 
-        console.log("täytteet: ", toppings)
-        updatePrice();
+  const handleExtra = (checkbox) => {
+    const extraName = checkbox.parentElement.textContent.trim();
+    if (checkbox.checked) {
+      extra.push(extraName);
+    } else {
+      extra = extra.filter((t) => t !== extraName);
     }
-    const handleExtra = (checkbox) => {
-        const checkboxes = document.querySelectorAll('input[name= "extra"]');
-        const extraName = checkbox.parentElement.textContent.trim();
-        if(checkbox.checked){
-          extra.push(extraName);
-        } else {
-            extra = extra.filter((t) => t ==! extraName )
-        }
-        console.log("Extrea", extra)
-        updatePrice();
+    console.log("Extrea", extra);
+    updatePrice();
+  };
+
+  function displayOrder() {
+    const customerName = customerNameInput.value;
+    const pancakeTypeSelect = document.getElementById("type");
+    const selectedPancake =
+      pancakeTypeSelect.options[pancakeTypeSelect.selectedIndex].textContent;
+
+    const selectedDelivery = document.querySelector(
+      'input[name="delivery"]:checked'
+    );
+    let deliveryInfo = selectedDelivery
+      ? selectedDelivery.parentElement.textContent.trim()
+      : "Ei valittu";
+
+    let extraList = extra.length > 0 ? extra.join(", ") : "Ei lisäyksiä";
+    let toppingList =
+      toppings.length > 0 ? toppings.join(", ") : "Ei täytteitä";
+
+    const orderDetails = `
+            <h4>Your Order:</h2>
+            <p><strong>Customer Name:</strong> ${customerName}</p>
+            <p><strong>Pancake Type:</strong> ${selectedPancake}</p>
+            <p><strong>Toppings:</strong> ${toppingList}</p>
+            <p><strong>Extras:</strong> ${extraList}</p>
+            <p><strong>Delivery:</strong> ${deliveryInfo}</p>
+            <p class="data-price">${totalPriceElement.textContent}</p>
+        `;
+    if(customerName == ""){
+        alert("Enter Your name")
+    } else {
+         orderSummaryDiv.innerHTML = orderDetails;
     }
+   resetForm()
+  }
+  function resetForm() {
+    form.reset();
+  }
+
+  form.addEventListener("change", (event) => {
+    const target = event.target;
+    if (target.id === "type") {
+      updatePrice();
+    } else if (target.classList.contains("topping")) {
+      handleToppings(target);
+    } else if (target.classList.contains("extra")) {
+      handleExtra(target);
+    } else if (target.classList.contains("delivery")) {
+      updatePrice();
+    }
+  });
+
+  showOrderButton.addEventListener("click", (event) =>{
+    event.preventDefault(); 
+    displayOrder(); 
+    resetForm();
+  });
 });

@@ -80,6 +80,7 @@
                 <h3>Valitse lisukkeet:</h3>
                 <label><input type="checkbox" class="extra" data-price="2"/> Kermavaahto +2€</label>
                 <label><input type="checkbox" class="extra" data-price="3" /> Jäätelö +3€</label>
+                <button type="button" class="showOrderButton">Checkout</button>
             </div>
           <div class="column">
           <div class="form-column">
@@ -90,12 +91,14 @@
               <label><input type="radio" name="delivery" class="delivery" data-price="5" /> Toimitus (+ 5€)</label>
             </div>
             <label for="customerName">Sinun nimesi:</label>
-            <input type="text" id="customerName" placeholder="Syötä sinun nimi" />
-            <label for="customerAddress">Osoitteesi:</label>
-            <input type="text" id="customerAddress" placeholder="Syötä osoitteesi" />
+            <input type="text" id="customerName" placeholder="Syötä sinun nimi"  required/>
+            <!--total show-->
+            <div class="orderSummary">
+
+            </div>
+            
           </div>
           </div>
-          <button type="submit">Lähetä</button>
           </form>
 
         </div>      

@@ -246,5 +246,9 @@ form button {
   border: 2px solid;
   border-color: #f0eeee;
   cursor: pointer;
+  margin-top: 20px;
 
+}
+.orderSummary{
+  margin-top: 20px;
 }
