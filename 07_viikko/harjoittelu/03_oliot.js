@@ -77,8 +77,28 @@ Luo olio `product`, jolla on `name`, `price` ja `quantity`.
 Lisää HTML:ään syöttökenttä, johon käyttäjä voi syöttää ostettavan määrän.
 Päivitä `quantity` ja näytä kokonaishinta dynaamisesti.
 */
+// const product = {
+//   name : "men shoes",
+//   price: 40,
+//   quantity: null
+// }
+// let itemName = document.getElementById("itemName");
+// let itemPirce = document.getElementById("itemPrice");
+// let quantityInput = document.getElementById("qty");
+// itemName = product.name;
+// itemPirce = product.price;
 
-// Kirjoita koodisi tähän
+// const updatePrice = () => {
+//   const qty = parseInt(quantityInput.value,10);
+// }
+// if(quaty >= 1 ){
+//   product.quantity = qty
+//   let  totalPrice = product.price * qty
+//   document.getElementById("total").textContent = totalPrice
+// } else if (quaty< 0){
+//   alert("qauantity should be 1 or more")
+// }
+// quantityInput.addEventListener("input", updatePrice)
 
 /* Tehtävä 6
 Määrittele konstruktori `Task`, joka ottaa `title`, `description` ja `completed`.
@@ -114,37 +134,117 @@ Lisää HTML:ään painike, joka lajittelee käyttäjät pistemäärän mukaan l
 Luo olio `shoppingList`, jolla on taulukko `items`.
 Lisää syöttökenttä ja painike, joiden avulla käyttäjät voivat lisätä uusia tuotteita `items`-taulukkoon ja päivittää näkyvän listan.
 */
+const posts = [
+  { title: "Hei maailma", content: "Ensimmäinen postaus", likes: 0 },
+  { title: "Toinen", content: "Jatketaan", likes: 2 },
+];
 
-// Kirjoita koodisi tähän
+function renderPosts() {
+  const ul = document.getElementById("posts");
+  ul.innerHTML = "";
+  posts.forEach((p, i) => {
+    const li = document.createElement("li");
+    li.innerHTML =
+      `<h3>${p.title}</h3><p>${p.content}</p>` +
+      `<button data-id="${i}">Tykkää (${p.likes})</button>`;
+    ul.appendChild(li);
+  });
+  ul.querySelectorAll("button").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      const idx = parseInt(e.target.dataset.id, 10);
+      posts[idx].likes++;
+      renderPosts();
+    });
+  });
+}
+renderPosts()
 
 /* Tehtävä 11
 Luo taulukko `posts`, jossa jokaisella postauksella on `title`, `content` ja `likes`.
 Lisää jokaisen postauksen viereen "Tykkää"-painike, joka kasvattaa `likes`-määrää ja päivittää näkymän.
 */
 
-// Kirjoita koodisi tähän
 
 /* Tehtävä 12
 Luo konstruktori-funktio `Employee`, jolla on `name`, `position` ja `salary`.
 Lisää metodi `increaseSalary(percent)`, joka kasvattaa palkkaa annetulla prosentilla.
 Luo työntekijä ja nosta hänen palkkaansa dynaamisesti.
 */
-
-// Kirjoita koodisi tähän
+class Employee {
+  constructor(name, possition, salary) {
+    this.name = name;
+    this.possition = possition;
+    this.salary = salary;
+  }
+  increaseSalary(percentage) {
+    this.salary *= percentage;
+  }
+  getInfo() {
+    console.log(`
+      Emoloyee name: ${emp.name} Possition: ${emp.possition} Salary: ${emp.salary}
+      `);
+  }
+}
+const emp = new Employee("abdulkadir", "Data Analayst", 4000);
+emp.getInfo();
+emp.increaseSalary(1.15);
+emp.getInfo();
 
 /* Tehtävä 13
 Luo olio `timer`, jolla on `seconds` ja metodi `start()`, joka laskee sekunteja ylöspäin.
 Näytä ajastin HTML-elementissä ja päivitä se sekunnin välein.
 */
+const timer = {
+  second: 0,
+  start() {
+    if(this.intervalId) return ;
+    this.intervalId = setInterval(() => {
+      this.second ++;
+      document.getElementById("timer").textContent = this.second;
 
-// Kirjoita koodisi tähän
+    },1000)
+  },
+  stop() {
+  clearInterval(this.intervalId);
+  this.intervalId = null
+}
+};
+
+document.getElementById("start").addEventListener("click", () => {
+  console.log("start button clickec");
+  timer.start();
+});
+document.getElementById("stop").addEventListener("click", () => {
+  console.log("stop button clicked");
+  timer.stop();
+});
 
 /* Tehtävä 14
 Luo konstruktori-funktio `Book`, joka ottaa parametreina `title`, `author` ja `pages`.
 Luo yksinkertainen kirjastosovellus, jonka avulla käyttäjät voivat lisätä kirjoja HTML-lomakkeen kautta ja näyttää ne dynaamisesti.
 */
 
-// Kirjoita koodisi tähän
+class Book{
+  constructor(nimi, kirjaillija, sivut){
+    this.nimi = nimi;
+    this.kirjaillija = kirjaillija;
+    this.sivut = sivut
+  }
+}
+document.getElementById("bookForm").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const bookName = document.getElementById("t").value;
+  const author = document.getElementById("a").value;
+  const pages = document.getElementById("p").value;
+
+  const book = new Book(bookName, author, pages);
+  const li = document.createElement("li");
+  li.textContent = `${book.nimi} by ${book.kirjaillija} ${book.sivut}`;
+  document.getElementById("books").appendChild(li);
+
+  e.target.reset();
+
+})
 
 /* Tehtävä 15
 Luo olio `foxTracker`, jolla on `foxes`-taulukko.
@@ -152,4 +252,22 @@ Lisää syöttökenttä ja painike, joiden avulla käyttäjät voivat lisätä u
 Näytä kettujen lista dynaamisesti HTML-elementissä.
 */
 
-// Kirjoita koodisi tähän
+const foxTracker = {
+  foxes: []
+}
+document.getElementById("addFox").addEventListener("click", () =>{
+  const name = document.getElementById("name").value;
+  const location = document.getElementById("loc").value;
+
+  if(name && location ) {
+    foxTracker.foxes.push(name, location);
+
+    const li = document.createElement("li")
+    li.textContent = `${name} @ ${location}`;
+    document.getElementById("foxes").appendChild(li);
+
+    document.getElementById("name").value = "";
+    document.getElementById("loc").value = "";
+
+  }
+});

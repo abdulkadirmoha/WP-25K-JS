@@ -1,59 +1,64 @@
-let animals = [];
+const animals = [];
 
 const render = () => {
-  const container = document.querySelector(".animalList"); // fixed: match HTML
-  let html = "";
+    const container = document.querySelector(".animalList");
+    let html = "";
 
-  animals.forEach((animal, i) => {
+    animals.forEach((animal, i) => {
     html += `
       <div class="animal-card">
-        <div><strong>Nimi:</strong> ${animal.animalName}</div>
-        <div><strong>Tyyppi:</strong> ${animal.animalType}</div>
-        <button class="delete-btn" onclick="deleteAnimal(${i})">Poista</button>
-      </div>
+        <div><strong>Animal name:</strong> ${animal.name}  
+        <strong>Animal type:</strong> ${animal.type}
+        <button onclick= "deleteAnimal(${i})">Delete</button>
+        </div>
+        
+        </div>
     `;
-  });
-
-  container.innerHTML = html;
-};
-
+    });
+    container.innerHTML = html;
+    
+ 
+}
 function deleteAnimal(index) {
-  animals.splice(index, 1);
-  render();
+    animals.splice(index,1);
+    render()
 }
 
-const addNewAnimal = () => {
-  const inputAnimal = document.getElementById("newAnimalName");
-  const animalTypeSelect = document.getElementById("newAnimalType");
 
-  const animalName = inputAnimal.value.trim();
-  const animalType = animalTypeSelect.value;
 
-  if (animalName === "") return; // prevent empty name
+addNewAnimal = () => {
+    const animalName = document.getElementById("newAnimalName");
+    const animalType = document.getElementById("newAnimalType");
 
-  animals.push({ animalName, animalType });
+    const name = animalName.value;
+    const type = animalType.value;
 
-  inputAnimal.value = "";
-  animalTypeSelect.value = "";
+    if(!name || !type === "") return;
 
-  render();
+    animals.push({name , type})
+    console.log(animals)
+    animalName.value = "";
+    animalType.value;
+
+    render()
 };
 
-const searchAnimal = () => {
-  const searchInput = document.getElementById("searchAnimal");
-  const searchValue = searchInput.value.trim().toLowerCase();
+const searchAnimal = () =>{
+    const searchAnimal = document.getElementById("searchAnimal");
+    const filterType = document.getElementById("filterType");
 
-  const filterSelect = document.getElementById("filterType");
-  const filterValue = filterSelect.value;
+    const searchValue = searchAnimal.value.trim().toLowerCase();
+    const filterValue = filterType.value;
 
-  const resultBox = document.getElementById("searchResult");
+    const found = animals.some((animal) =>{
+        const nameMatch = animal.name.toLowerCase().includes(searchValue);
 
-  const found = animals.some((animal) => {
-    const nameMatch = animal.animalName.toLowerCase().includes(searchValue);
-    const typeMatch =
-      filterValue === "Kaikki" || animal.animalType === filterValue;
-    return nameMatch && typeMatch;
-  });
+        const typeMatch = filterValue === "Kaikki" || animal.type === filterValue;
+        return nameMatch && typeMatch
 
-  resultBox.textContent = found ? "Found ✅" : "Not found ❌";
-};
+    });
+    const resultBox = document.getElementById("searchResult");
+    resultBox.textContent = found ? "Found" : "Not Found"
+    
+   
+}
