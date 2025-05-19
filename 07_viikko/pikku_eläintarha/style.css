@@ -10,7 +10,7 @@ body {
   margin: auto;
   padding: 20px;
   background: white;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
@@ -18,21 +18,11 @@ h1 {
   margin-bottom: 30px;
 }
 
-.controls,
-.add-animal .form-row {
-  margin-bottom: 20px;
-}
-
-.form-row {
+.controls {
   display: grid;
   grid-template-columns: 2fr 1fr auto;
   gap: 10px;
-}
-
-@media (max-width: 600px) {
-  .form-row {
-    grid-template-columns: 1fr;
-  }
+  margin-bottom: 20px;
 }
 
 input,
@@ -40,6 +30,7 @@ select,
 button {
   padding: 10px;
   font-size: 16px;
+  box-sizing: border-box;
 }
 
 button {
@@ -54,32 +45,46 @@ button:hover {
   background-color: #2980b9;
 }
 
+.form-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr auto;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 600px) {
+  .controls,
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
 .animalList {
   margin: 20px 0;
 }
 
 .animal-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   background: #fff;
   padding: 15px;
   border-radius: 8px;
   border: 1px solid #ddd;
   margin-bottom: 10px;
+  align-items: center;
 }
 
-.animal-card h3,
-.animal-card p {
-  margin: 5px 0;
+.animal-card .name {
+  text-align: left;
+  font-weight: bold;
 }
 
-.animal-card button {
-  background-color: #e74c3c;
-}
-
-.animal-card button:hover {
-  background-color: #c0392b;
+.animal-card .type {
+  text-align: right;
+  font-style: italic;
 }
 
 .search-result {
   font-weight: bold;
-  margin: 10px 0;
+  margin-bottom: 20px;
 }
