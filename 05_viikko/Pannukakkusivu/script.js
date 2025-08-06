@@ -8,6 +8,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
   let toppings = [];
   let extra = [];
 
+  // Load existing orders or initialize empty array
+  let orders = JSON.parse(localStorage.getItem("orders")) || [];
+
   const updatePrice = () => {
     const pancakeTypeSelect = document.getElementById("type");
     const selectedType =
@@ -32,8 +35,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
       total += deliveryFee;
     }
 
-    let formattedTotal = "Yhteensä: " + total.toFixed(2) + "€";
-    totalPriceElement.textContent = formattedTotal;
+    totalPriceElement.textContent = "Yhteensä: " + total.toFixed(2) + "€";
   };
 
   const handleToppings = (checkbox) => {
@@ -43,7 +45,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
     } else {
       toppings = toppings.filter((t) => t !== toppingName);
     }
-    console.log("täytteet: ", toppings);
     updatePrice();
   };
 
@@ -54,12 +55,16 @@ document.addEventListener("DOMContentLoaded", (event) => {
     } else {
       extra = extra.filter((t) => t !== extraName);
     }
-    console.log("Extrea", extra);
     updatePrice();
   };
 
+  function saveOrder(orderObj) {
+    orders.push(orderObj);
+    localStorage.setItem("orders", JSON.stringify(orders));
+  }
+
   function displayOrder() {
-    const customerName = customerNameInput.value;
+    const customerName = customerNameInput.value.trim();
     const pancakeTypeSelect = document.getElementById("type");
     const selectedPancake =
       pancakeTypeSelect.options[pancakeTypeSelect.selectedIndex].textContent;
@@ -75,26 +80,51 @@ document.addEventListener("DOMContentLoaded", (event) => {
     let toppingList =
       toppings.length > 0 ? toppings.join(", ") : "Ei täytteitä";
 
-    const orderDetails = `
-            <h4>Your Order:</h2>
-            <p><strong>Customer Name:</strong> ${customerName}</p>
-            <p><strong>Pancake Type:</strong> ${selectedPancake}</p>
-            <p><strong>Toppings:</strong> ${toppingList}</p>
-            <p><strong>Extras:</strong> ${extraList}</p>
-            <p><strong>Delivery:</strong> ${deliveryInfo}</p>
-            <p class="data-price">${totalPriceElement.textContent}</p>
-        `;
-    if(customerName == ""){
-        alert("Enter Your name")
-    } else {
-         orderSummaryDiv.innerHTML = orderDetails;
+    // Parse total price number only
+    const priceText = totalPriceElement.textContent
+      .replace("Yhteensä: ", "")
+      .replace("€", "");
+    const total = parseFloat(priceText);
+
+    if (customerName === "") {
+      alert("Enter your name");
+      return;
     }
-   resetForm()
-  }
-  function resetForm() {
-    form.reset();
+
+    const orderObj = {
+      customerName,
+      selectedPancake,
+      toppingList,
+      extraList,
+      deliveryInfo,
+      total,
+      status: "pending",
+      id: Date.now(),
+    };
+
+    saveOrder(orderObj);
+
+    orderSummaryDiv.innerHTML = `
+      <h4>Your Order:</h4>
+      <p><strong>Customer Name:</strong> ${customerName}</p>
+      <p><strong>Pancake Type:</strong> ${selectedPancake}</p>
+      <p><strong>Toppings:</strong> ${toppingList}</p>
+      <p><strong>Extras:</strong> ${extraList}</p>
+      <p><strong>Delivery:</strong> ${deliveryInfo}</p>
+      <p><strong>Total:</strong> ${total.toFixed(2)}€</p>
+    `;
+
+    resetForm();
   }
 
+  function resetForm() {
+    form.reset();
+    toppings = [];
+    extra = [];
+    updatePrice(); // reset price display after clearing form
+  }
+
+  // Event listeners
   form.addEventListener("change", (event) => {
     const target = event.target;
     if (target.id === "type") {
@@ -108,9 +138,10 @@ document.addEventListener("DOMContentLoaded", (event) => {
     }
   });
 
-  showOrderButton.addEventListener("click", (event) =>{
-    event.preventDefault(); 
-    displayOrder(); 
-    resetForm();
+  showOrderButton.addEventListener("click", (event) => {
+    event.preventDefault();
+    displayOrder();
   });
+
+  updatePrice(); 
 });

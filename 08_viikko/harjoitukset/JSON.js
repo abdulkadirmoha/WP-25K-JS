@@ -145,4 +145,12 @@ Pura JSON takaisin olioksi ja päivitä `score`-ominaisuutta lisäämällä siih
 Tulosta päivitetty olio.
 */
 
-// Kirjoita koodi tähän
+const gameProgress = {
+  level: 1,
+  score: 0,
+  livesRemaining: 3,
+};
+const jnosSrting = JSON.stringify(gameProgress);
+const parseObject = JSON.parse(jnosSrting);
+parseObject.score += 100;
+console.log(parseObject);
